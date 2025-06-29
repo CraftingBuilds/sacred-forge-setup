@@ -1,0 +1,3 @@
+# Python packages needed for Sacred Forge
+# Example:
+flask
