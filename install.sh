@@ -1,12 +1,23 @@
-#!/usr/bin/env bash
-# Sacred Forge Install Script
+# Install OCI CLI if missing
+if ! command -v oci &> /dev/null; then
+  echo "Installing Oracle Cloud CLI..."
+  pip install --quiet oci-cli
+fi
 
-set -e
+# Clone the repo if not present
+if [ ! -d "sacred-forge-setup" ]; then
+  git clone https://github.com/CraftingBuilds/sacred-forge-setup.git sacred-forge-setup
+fi
 
-echo "Updating system..."
-sudo apt update && sudo apt upgrade -y
+# Enter project directory
+cd sacred-forge-setup
 
-echo "Installing dependencies..."
-sudo apt install -y python3 python3-pip git
+# Pull latest code
+git pull
 
-echo "Installation conmplete."
+# Install Python dependencies if needed
+if [ -f "requirements.txt" ]; then
+  pip install --quiet -r requirements.txt
+fi
+
+echo "✅ Environment ready."
